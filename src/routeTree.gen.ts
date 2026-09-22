@@ -11,7 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChecklistRouteImport } from './routes/checklist'
+import { Route as JournalRouteImport } from './routes/journal'
 import { Route as PlanRouteImport } from './routes/plan'
+import { Route as StatsRouteImport } from './routes/stats'
+import { Route as ToolsRouteImport } from './routes/tools'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,40 +26,68 @@ const ChecklistRoute = ChecklistRouteImport.update({
   path: '/checklist',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlanRoute = PlanRouteImport.update({
   id: '/plan',
   path: '/plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StatsRoute = StatsRouteImport.update({
+  id: '/stats',
+  path: '/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/checklist': typeof ChecklistRoute
+  '/journal': typeof JournalRoute
   '/plan': typeof PlanRoute
+  '/stats': typeof StatsRoute
+  '/tools': typeof ToolsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/checklist': typeof ChecklistRoute
+  '/journal': typeof JournalRoute
   '/plan': typeof PlanRoute
+  '/stats': typeof StatsRoute
+  '/tools': typeof ToolsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/checklist': typeof ChecklistRoute
+  '/journal': typeof JournalRoute
   '/plan': typeof PlanRoute
+  '/stats': typeof StatsRoute
+  '/tools': typeof ToolsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/checklist' | '/plan'
+  fullPaths: '/' | '/checklist' | '/journal' | '/plan' | '/stats' | '/tools'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/checklist' | '/plan'
-  id: '__root__' | '/' | '/checklist' | '/plan'
+  to: '/' | '/checklist' | '/journal' | '/plan' | '/stats' | '/tools'
+  id:
+    '__root__' | '/' | '/checklist' | '/journal' | '/plan' | '/stats' | '/tools'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChecklistRoute: typeof ChecklistRoute
+  JournalRoute: typeof JournalRoute
   PlanRoute: typeof PlanRoute
+  StatsRoute: typeof StatsRoute
+  ToolsRoute: typeof ToolsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -75,11 +106,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChecklistRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/plan': {
       id: '/plan'
       path: '/plan'
       fullPath: '/plan'
       preLoaderRoute: typeof PlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stats': {
+      id: '/stats'
+      path: '/stats'
+      fullPath: '/stats'
+      preLoaderRoute: typeof StatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -88,7 +140,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChecklistRoute: ChecklistRoute,
+  JournalRoute: JournalRoute,
   PlanRoute: PlanRoute,
+  StatsRoute: StatsRoute,
+  ToolsRoute: ToolsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
