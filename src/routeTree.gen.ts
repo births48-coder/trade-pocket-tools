@@ -12,9 +12,16 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChecklistRouteImport } from './routes/checklist'
 import { Route as JournalRouteImport } from './routes/journal'
+import { Route as MoreRouteImport } from './routes/more'
 import { Route as PlanRouteImport } from './routes/plan'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as MoreIndexRouteImport } from './routes/more.index'
+import { Route as MoreAboutRouteImport } from './routes/more.about'
+import { Route as MoreAccountsRouteImport } from './routes/more.accounts'
+import { Route as MoreDataRouteImport } from './routes/more.data'
+import { Route as MoreSettingsRouteImport } from './routes/more.settings'
+import { Route as MoreStrategiesRouteImport } from './routes/more.strategies'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,6 +36,11 @@ const ChecklistRoute = ChecklistRouteImport.update({
 const JournalRoute = JournalRouteImport.update({
   id: '/journal',
   path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoreRoute = MoreRouteImport.update({
+  id: '/more',
+  path: '/more',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlanRoute = PlanRouteImport.update({
@@ -46,14 +58,51 @@ const ToolsRoute = ToolsRouteImport.update({
   path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MoreIndexRoute = MoreIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MoreRoute,
+} as any)
+const MoreAboutRoute = MoreAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => MoreRoute,
+} as any)
+const MoreAccountsRoute = MoreAccountsRouteImport.update({
+  id: '/accounts',
+  path: '/accounts',
+  getParentRoute: () => MoreRoute,
+} as any)
+const MoreDataRoute = MoreDataRouteImport.update({
+  id: '/data',
+  path: '/data',
+  getParentRoute: () => MoreRoute,
+} as any)
+const MoreSettingsRoute = MoreSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => MoreRoute,
+} as any)
+const MoreStrategiesRoute = MoreStrategiesRouteImport.update({
+  id: '/strategies',
+  path: '/strategies',
+  getParentRoute: () => MoreRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/checklist': typeof ChecklistRoute
   '/journal': typeof JournalRoute
+  '/more': typeof MoreRouteWithChildren
   '/plan': typeof PlanRoute
   '/stats': typeof StatsRoute
   '/tools': typeof ToolsRoute
+  '/more/about': typeof MoreAboutRoute
+  '/more/accounts': typeof MoreAccountsRoute
+  '/more/data': typeof MoreDataRoute
+  '/more/settings': typeof MoreSettingsRoute
+  '/more/strategies': typeof MoreStrategiesRoute
+  '/more/': typeof MoreIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,29 +111,81 @@ export interface FileRoutesByTo {
   '/plan': typeof PlanRoute
   '/stats': typeof StatsRoute
   '/tools': typeof ToolsRoute
+  '/more/about': typeof MoreAboutRoute
+  '/more/accounts': typeof MoreAccountsRoute
+  '/more/data': typeof MoreDataRoute
+  '/more/settings': typeof MoreSettingsRoute
+  '/more/strategies': typeof MoreStrategiesRoute
+  '/more': typeof MoreIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/checklist': typeof ChecklistRoute
   '/journal': typeof JournalRoute
+  '/more': typeof MoreRouteWithChildren
   '/plan': typeof PlanRoute
   '/stats': typeof StatsRoute
   '/tools': typeof ToolsRoute
+  '/more/about': typeof MoreAboutRoute
+  '/more/accounts': typeof MoreAccountsRoute
+  '/more/data': typeof MoreDataRoute
+  '/more/settings': typeof MoreSettingsRoute
+  '/more/strategies': typeof MoreStrategiesRoute
+  '/more/': typeof MoreIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/checklist' | '/journal' | '/plan' | '/stats' | '/tools'
+  fullPaths:
+    | '/'
+    | '/checklist'
+    | '/journal'
+    | '/more'
+    | '/plan'
+    | '/stats'
+    | '/tools'
+    | '/more/about'
+    | '/more/accounts'
+    | '/more/data'
+    | '/more/settings'
+    | '/more/strategies'
+    | '/more/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/checklist' | '/journal' | '/plan' | '/stats' | '/tools'
+  to:
+    | '/'
+    | '/checklist'
+    | '/journal'
+    | '/plan'
+    | '/stats'
+    | '/tools'
+    | '/more/about'
+    | '/more/accounts'
+    | '/more/data'
+    | '/more/settings'
+    | '/more/strategies'
+    | '/more'
   id:
-    '__root__' | '/' | '/checklist' | '/journal' | '/plan' | '/stats' | '/tools'
+    | '__root__'
+    | '/'
+    | '/checklist'
+    | '/journal'
+    | '/more'
+    | '/plan'
+    | '/stats'
+    | '/tools'
+    | '/more/about'
+    | '/more/accounts'
+    | '/more/data'
+    | '/more/settings'
+    | '/more/strategies'
+    | '/more/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChecklistRoute: typeof ChecklistRoute
   JournalRoute: typeof JournalRoute
+  MoreRoute: typeof MoreRouteWithChildren
   PlanRoute: typeof PlanRoute
   StatsRoute: typeof StatsRoute
   ToolsRoute: typeof ToolsRoute
@@ -113,6 +214,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JournalRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/more': {
+      id: '/more'
+      path: '/more'
+      fullPath: '/more'
+      preLoaderRoute: typeof MoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/plan': {
       id: '/plan'
       path: '/plan'
@@ -134,13 +242,76 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/more/': {
+      id: '/more/'
+      path: '/'
+      fullPath: '/more/'
+      preLoaderRoute: typeof MoreIndexRouteImport
+      parentRoute: typeof MoreRoute
+    }
+    '/more/about': {
+      id: '/more/about'
+      path: '/about'
+      fullPath: '/more/about'
+      preLoaderRoute: typeof MoreAboutRouteImport
+      parentRoute: typeof MoreRoute
+    }
+    '/more/accounts': {
+      id: '/more/accounts'
+      path: '/accounts'
+      fullPath: '/more/accounts'
+      preLoaderRoute: typeof MoreAccountsRouteImport
+      parentRoute: typeof MoreRoute
+    }
+    '/more/data': {
+      id: '/more/data'
+      path: '/data'
+      fullPath: '/more/data'
+      preLoaderRoute: typeof MoreDataRouteImport
+      parentRoute: typeof MoreRoute
+    }
+    '/more/settings': {
+      id: '/more/settings'
+      path: '/settings'
+      fullPath: '/more/settings'
+      preLoaderRoute: typeof MoreSettingsRouteImport
+      parentRoute: typeof MoreRoute
+    }
+    '/more/strategies': {
+      id: '/more/strategies'
+      path: '/strategies'
+      fullPath: '/more/strategies'
+      preLoaderRoute: typeof MoreStrategiesRouteImport
+      parentRoute: typeof MoreRoute
+    }
   }
 }
+
+interface MoreRouteChildren {
+  MoreAboutRoute: typeof MoreAboutRoute
+  MoreAccountsRoute: typeof MoreAccountsRoute
+  MoreDataRoute: typeof MoreDataRoute
+  MoreSettingsRoute: typeof MoreSettingsRoute
+  MoreStrategiesRoute: typeof MoreStrategiesRoute
+  MoreIndexRoute: typeof MoreIndexRoute
+}
+
+const MoreRouteChildren: MoreRouteChildren = {
+  MoreAboutRoute: MoreAboutRoute,
+  MoreAccountsRoute: MoreAccountsRoute,
+  MoreDataRoute: MoreDataRoute,
+  MoreSettingsRoute: MoreSettingsRoute,
+  MoreStrategiesRoute: MoreStrategiesRoute,
+  MoreIndexRoute: MoreIndexRoute,
+}
+
+const MoreRouteWithChildren = MoreRoute._addFileChildren(MoreRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChecklistRoute: ChecklistRoute,
   JournalRoute: JournalRoute,
+  MoreRoute: MoreRouteWithChildren,
   PlanRoute: PlanRoute,
   StatsRoute: StatsRoute,
   ToolsRoute: ToolsRoute,
