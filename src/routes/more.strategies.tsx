@@ -22,7 +22,7 @@ export const Route = createFileRoute("/more/strategies")({
       },
     ],
   }),
-  component: Strategies;
+  component: Strategies,
 });
 
 type Draft = Omit<Strategy, "riskPct" | "defaultRR"> & { riskPct: string; defaultRR: string };
